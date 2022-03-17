@@ -20,7 +20,8 @@ class _SignPageState extends State<SignPage> {
         child: Column(
           children: <Widget>[
             if (!isKeyboard)
-              // Logo
+
+              /// Logo
               DelayedDisplay(
                 delay: const Duration(seconds: 1),
                 child: Lottie.asset('assets/login.json', height: 300),
@@ -30,7 +31,7 @@ class _SignPageState extends State<SignPage> {
                 height: 100,
               ),
 
-            // Form NIM
+            /// Form NIM
             DelayedDisplay(
                 delay: const Duration(seconds: 2),
                 child: Container(
@@ -66,7 +67,7 @@ class _SignPageState extends State<SignPage> {
                   ),
                 )),
 
-            //Form password
+            ///Form password
             DelayedDisplay(
                 delay: const Duration(seconds: 3),
                 child: Container(
@@ -126,6 +127,8 @@ class _SignPageState extends State<SignPage> {
                     },
                   ));
                 },
+
+                ///button login
                 child: Container(
                   height: 50,
                   width: 150,
