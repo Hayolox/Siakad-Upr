@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
-
 class NewsModel {
-  String image;
-  String title;
-  String description;
-  String date;
+  final String image;
+  final String title;
+  final String description;
+  final String date;
 
   NewsModel(
       {required this.image,

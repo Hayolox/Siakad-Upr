@@ -10,7 +10,7 @@ class SignPage extends StatefulWidget {
 }
 
 class _SignPageState extends State<SignPage> {
-  bool isHidden = true;
+  bool _isHidden = true;
   @override
   Widget build(BuildContext context) {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
@@ -93,7 +93,7 @@ class _SignPageState extends State<SignPage> {
                             child: TextFormField(
                           autocorrect: false,
                           textInputAction: TextInputAction.done,
-                          obscureText: isHidden,
+                          obscureText: _isHidden,
                           decoration: const InputDecoration.collapsed(
                             hintText: '',
                           ),
@@ -101,10 +101,10 @@ class _SignPageState extends State<SignPage> {
                         IconButton(
                             padding: const EdgeInsets.all(0),
                             onPressed: () {
-                              if (isHidden == true) {
-                                isHidden = false;
+                              if (_isHidden == true) {
+                                _isHidden = false;
                               } else {
-                                isHidden = true;
+                                _isHidden = true;
                               }
                               setState(() {});
                             },
