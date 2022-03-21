@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:siakad/controller/loginController.dart';
 import 'package:siakad/pages/main_page.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-class SignPage extends StatefulWidget {
-  @override
-  State<SignPage> createState() => _SignPageState();
-}
+class SignPage extends StatelessWidget {
+  final LoginController _getData = Get.find();
+  final box = GetStorage();
 
-class _SignPageState extends State<SignPage> {
-  bool _isHidden = true;
   @override
   Widget build(BuildContext context) {
+    if (box.read('dataRememberMe') != null) {
+      _getData.nim.text = box.read('dataRememberMe')['nim'];
+      _getData.password.text = box.read('dataRememberMe')['password'];
+      _getData.isRememberme.toggle();
+    }
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -57,6 +62,7 @@ class _SignPageState extends State<SignPage> {
                       Text('Nim : ', style: GoogleFonts.poppins()),
                       Expanded(
                           child: TextFormField(
+                        controller: _getData.nim,
                         autocorrect: false,
                         textInputAction: TextInputAction.next,
                         decoration: const InputDecoration.collapsed(
@@ -90,24 +96,20 @@ class _SignPageState extends State<SignPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Pass: ', style: GoogleFonts.poppins()),
-                        Expanded(
-                            child: TextFormField(
-                          autocorrect: false,
-                          textInputAction: TextInputAction.done,
-                          obscureText: _isHidden,
-                          decoration: const InputDecoration.collapsed(
-                            hintText: '',
-                          ),
-                        )),
+                        Obx(() => Expanded(
+                                child: TextFormField(
+                              controller: _getData.password,
+                              autocorrect: false,
+                              textInputAction: TextInputAction.done,
+                              obscureText: _getData.isHidden.value,
+                              decoration: const InputDecoration.collapsed(
+                                hintText: '',
+                              ),
+                            ))),
                         IconButton(
                             padding: const EdgeInsets.all(0),
                             onPressed: () {
-                              if (_isHidden == true) {
-                                _isHidden = false;
-                              } else {
-                                _isHidden = true;
-                              }
-                              setState(() {});
+                              _getData.isHidden.toggle();
                             },
                             icon: const Icon(Icons.remove_red_eye_outlined)),
                       ],
@@ -117,15 +119,29 @@ class _SignPageState extends State<SignPage> {
             const SizedBox(
               height: 10,
             ),
+
+            ///Remember Me
+            DelayedDisplay(
+              delay: const Duration(seconds: 4),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                ),
+                child: Obx(() => CheckboxListTile(
+                      title: const Text('Remember Me'),
+                      value: _getData.isRememberme.value,
+                      onChanged: (value) {
+                        _getData.isRememberme.toggle();
+                      },
+                    )),
+              ),
+            ),
             DelayedDisplay(
               delay: const Duration(seconds: 4),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) {
-                      return const MainPage();
-                    },
-                  ));
+                  _getData.auth();
                 },
 
                 ///button login

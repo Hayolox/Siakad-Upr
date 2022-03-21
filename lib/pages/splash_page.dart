@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:siakad/pages/sign_page.dart';
+import 'package:get/get.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -14,12 +15,9 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     Timer(
-        const Duration(seconds: 3),
-        () => Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) {
-                return SignPage();
-              },
-            )));
+      const Duration(seconds: 3),
+      () => Get.offAllNamed('/login'),
+    );
 
     super.initState();
   }
